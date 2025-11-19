@@ -1,23 +1,20 @@
-import logo from './logo.svg';
-import './App.css';
-
+import 'bootstrap/dist/css/bootstrap.min.css';
+import React, { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import Login from './components/login';
+import Mainpage from './components/mainpage';
 function App() {
+  const Authentication = localStorage.getItem("Authorization") === "true"
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Router>
+        <Routes>
+          {/*obsługoa przeniesienia do logowania */}
+          <Route path='/' element={Authentication ? <Navigate to="/home"/> : <Login />}/>
+          <Route path='/home' element={Authentication ? <Mainpage/>: <Navigate to="/"/>}/>
+        </Routes>
+      </Router>
     </div>
   );
 }
