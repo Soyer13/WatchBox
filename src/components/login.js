@@ -17,17 +17,7 @@ function Login({ setAuth }){
         })
         .then(res => res.json())
         .then(result =>{
-           // console.log(result.data[0].UserName)
-            //if(result.data[0].UserName == logIn && result.data[0].Password == password){
-
             if(result.success){
-                /*
-                //localStorage.setItem("Authorization", true);
-                setAuth(true);  // <- odświeża App i pozwala wejść na /home
-                console.log(localStorage.getItem("Authorization"))
-                //window.location.href = "/home";
-                navigate("/home");
-                */
                 Cookies.set('Authorization', 'true', { expires: 1 }); 
                 Cookies.set('ID',result.Id,{ expires: 1})
                 setAuth(true);

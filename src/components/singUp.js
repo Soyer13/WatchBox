@@ -13,6 +13,7 @@ function SingUp({ setAuth }) {
     const [Password, setPassword] = useState('')
 
     function SaveNewUser() {
+        // Sprawdzanie Czy Login Jest już zajęty
         fetch(`http://localhost:8000/chkLogin/${Login}`)
             .then(res => res.json())
             .then(result => {
@@ -20,6 +21,7 @@ function SingUp({ setAuth }) {
                     alert("Ten Login jest już zajęty");
                 }
                 else {
+                    //Zapisywanie Nowego Użytkownika
                     fetch('http://localhost:8000/signup', {
                         method: "POST",
                         headers: { "content-type": "application/json" },
