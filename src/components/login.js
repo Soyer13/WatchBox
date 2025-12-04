@@ -9,7 +9,6 @@ function Login(){
     function logIn(e){
         // sprawdzenie czy login i takie chasło jest w bazie danych
         e.preventDefault();
-        console.log(login,password)
         fetch("http://localhost:8000/login",{
             method: "POST",
             headers: {"Content-Type":"application/json"},
@@ -17,11 +16,18 @@ function Login(){
         })
         .then(res => res.json())
         .then(result =>{
+           // console.log(result.data[0].UserName)
+            //if(result.data[0].UserName == logIn && result.data[0].Password == password){
+
             if(result.success){
-                localStorage.setItem("Authorization", "true");
-                navigate("/home");
+                
+                localStorage.setItem("Authorization", true);
+                console.log(localStorage.getItem("Authorization"))
+                //window.location.href = "/home";
+                //navigate("/home");
             }else {
                 alert("Złe dane logowania!");
+                localStorage.setItem("Authorization", false);
             }  
         })
         .catch(err => console.error(err));

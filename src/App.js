@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import Login from './components/login';
 import Mainpage from './components/mainpage';
 function App() {
-  const Authentication = localStorage.getItem("Authorization") === "true"
+  const Authentication = localStorage.getItem("Authorization") === false
 
   return (
     <div>
