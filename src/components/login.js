@@ -29,6 +29,7 @@ function Login({ setAuth }){
                 navigate("/home");
                 */
                 Cookies.set('Authorization', 'true', { expires: 1 }); 
+                Cookies.set('ID',result.Id,{ expires: 1})
                 setAuth(true);
                 navigate("/home"); 
             }else {

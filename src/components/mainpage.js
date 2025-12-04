@@ -8,6 +8,7 @@ function Mainpage({ setAuth }){
     const navigate = useNavigate();
      function logOut() {
         Cookies.remove('Authorization'); 
+        Cookies.remove('ID')
         setAuth(false);                 
         navigate("/");                  
     }
