@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
-function Login(){
+import Cookies from 'js-cookie';
+
+function Login({ setAuth }){
     const [login,setLogin] = useState('')
     const [password,setpassword] = useState('')
-    const [data,setDane] = useState()
     const navigate = useNavigate();
     function logIn(e){
         // sprawdzenie czy login i takie chasło jest w bazie danych
@@ -20,14 +21,19 @@ function Login(){
             //if(result.data[0].UserName == logIn && result.data[0].Password == password){
 
             if(result.success){
-                
-                localStorage.setItem("Authorization", true);
+                /*
+                //localStorage.setItem("Authorization", true);
+                setAuth(true);  // <- odświeża App i pozwala wejść na /home
                 console.log(localStorage.getItem("Authorization"))
                 //window.location.href = "/home";
-                //navigate("/home");
+                navigate("/home");
+                */
+                Cookies.set('Authorization', 'true', { expires: 1 }); 
+                setAuth(true);
+                navigate("/home"); 
             }else {
                 alert("Złe dane logowania!");
-                localStorage.setItem("Authorization", false);
+                
             }  
         })
         .catch(err => console.error(err));

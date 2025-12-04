@@ -1,10 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Link ,useNavigate} from 'react-router-dom';
+import Cookies from 'js-cookie';
 
-function Mainpage(){
+
+function Mainpage({ setAuth }){
+
+    const navigate = useNavigate();
+     function logOut() {
+        Cookies.remove('Authorization'); 
+        setAuth(false);                 
+        navigate("/");                  
+    }
     return(<div>
         <h1>Mainpage</h1>
-        <input type='button' value="wyloguj" onClick={() => {localStorage.setItem("Authorization", false);  window.location.href = "/";}}/>
+        <input type='button' value="wyloguj" onClick={logOut}/>
         </div>)
 }
 
