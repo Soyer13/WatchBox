@@ -7,6 +7,7 @@ import Cookies from 'js-cookie';
 import Login from './components/login';
 import Mainpage from './components/mainpage';
 import LandingPage from './components/landingPage';
+import SingUp from './components/singUp';
 
 function App() {
  // const Authentication = localStorage.getItem("Authorization") === "true"
@@ -21,8 +22,9 @@ function App() {
       <Router>
         <Routes>
           {/*obsługoa przeniesienia do logowania */}
-          <Route path='/' element={<LandingPage/>}/>
+          <Route path='/' element={auth ? <Navigate to="/home"/> :<LandingPage/>} />
           <Route path='/login' element={auth ? <Navigate to="/home"/> : <Login setAuth={setAuth} />}/>
+          <Route path='/singup' element={auth ? <Navigate to="/home"/> : <SingUp setAuth={setAuth} />}/>
           <Route path='/home' element={auth ? <Mainpage setAuth={setAuth}/>: <Navigate to="/"/>}/>
         </Routes>
       </Router>

@@ -8,9 +8,14 @@ function LandingPage({ setAuth }){
      function login() {                
         navigate("/login");                  
     }
+
+    function signup() {                
+        navigate("/singup");                  
+    }
     return(<div>
         <h1>LandingPage</h1>
-        <input type='button' value="zaloguj" onClick={login}/>
+        <input type='button' value="Zaloguj" onClick={login}/>
+        <input type='button' value="Zarejestruj Się" onClick={signup}/>
         </div>)
 }
 
