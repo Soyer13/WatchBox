@@ -55,6 +55,12 @@ function Mainpage({ setAuth }) {
             body: JSON.stringify({UserId,MovieId})
         })
     }
+
+    function SearchMovies()
+    {
+        Cookies.set('Search',Search,{ expires: 0.2})
+        navigate("/search")
+    }
     return (<div>
         <header>
             <a href='/home'>
@@ -65,7 +71,7 @@ function Mainpage({ setAuth }) {
         </header>
         <main>
             <input type='text' value={Search} onChange={x => setSeatch(x.target.value)} />{/*zaokroglony */}
-            <input type='button' value="Szukaj" />
+            <input type='button' value="Szukaj" onClick={SearchMovies}/>
 
             <h2>Twoja Lista Filmów</h2>
             <div>
