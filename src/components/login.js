@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 import Cookies from 'js-cookie';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function Login({ setAuth }){
     const [login,setLogin] = useState('')

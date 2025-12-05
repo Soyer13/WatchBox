@@ -9,6 +9,7 @@ import Mainpage from './components/mainpage';
 import LandingPage from './components/landingPage';
 import SingUp from './components/singUp';
 import Search from './components/search';
+import AddNewMovie from './components/AddNewMovie';
 
 function App() {
  // const Authentication = localStorage.getItem("Authorization") === "true"
@@ -28,6 +29,7 @@ function App() {
           <Route path='/singup' element={auth ? <Navigate to="/home"/> : <SingUp setAuth={setAuth} />}/>
           <Route path='/home' element={auth ? <Mainpage setAuth={setAuth}/>: <Navigate to="/"/>}/>
           <Route path='/search' element={auth ? <Search setAuth={setAuth}/>: <Navigate to="/"/>}/>
+          <Route path='/addnew' element={auth ? <AddNewMovie setAuth={setAuth}/>: <Navigate to="/"/>}/>
         </Routes>
       </Router>
     </div>

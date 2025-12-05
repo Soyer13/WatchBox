@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link, data } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 import Cookies from 'js-cookie';
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 function Search({ setAuth }) {
     const Search = Cookies.get('Search')
     const [SearchMoviesToAdd, setSearchMoviesToAdd] = useState([])

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function Mainpage({ setAuth }) {
     const [Search, setSeatch] = useState('')
@@ -66,7 +66,7 @@ function Mainpage({ setAuth }) {
             <a href='/home'>
                 <img src="WatchBoxLogo.png" height="125px" alt='LogoWatchBox' />
             </a>
-            <input type='button' value="Dodaj Film" />
+            <input type='button' value="Dodaj Film" onClick={() => navigate('/addnew')} />
             <input type='button' value="Wyloguj" onClick={logOut} />
         </header>
         <main>
