@@ -45,17 +45,85 @@ function SingUp({ setAuth }) {
 
 
 
-    return (<div>
-        <h1>Zarejestrój Się!</h1>
-        <form>
-            <input type='text' value={Name} onChange={x => setName(x.target.value)} placeholder='Imie' required />
-            <input type='text' value={SurName} onChange={x => setSurname(x.target.value)} placeholder='Nazwisko' required />
-            <input type='text' value={Login} onChange={x => setLogin(x.target.value)} placeholder='Login/Nazwa Użytkownika' required />
-            <input type='password' value={Password} onChange={x => setPassword(x.target.value)} placeholder='Hasło' required />
-            <input type='button' value="Stwórz Konto" onClick={SaveNewUser} />
-        </form>
+    return (
+        <div className="d-flex flex-column min-vh-100 bg-dark text-light">
 
-    </div>)
+            <header className="bg-white d-flex align-items-center p-3">
+                <a href='/home'>
+                    <img src="WatchBoxLogo.png" height="80px" alt='LogoWatchBox' />
+                </a>
+            </header>
+
+            <main className="flex-fill d-flex justify-content-center align-items-center p-4">
+                <div className="w-100" style={{ maxWidth: '400px' }}>
+                    <h1 className="mb-4 text-center">Zarejestruj Się!</h1>
+                    <form className="d-flex flex-column gap-3" onSubmit={(e) => e.preventDefault()}>
+
+                        <div className="form-group">
+                            <label htmlFor="name">Imię</label>
+                            <input
+                                id="name"
+                                type='text'
+                                className="form-control rounded"
+                                placeholder='Imię'
+                                value={Name}
+                                onChange={x => setName(x.target.value)}
+                                required
+                            />
+                        </div>
+
+                        <div className="form-group">
+                            <label htmlFor="surname">Nazwisko</label>
+                            <input
+                                id="surname"
+                                type='text'
+                                className="form-control rounded"
+                                placeholder='Nazwisko'
+                                value={SurName}
+                                onChange={x => setSurname(x.target.value)}
+                                required
+                            />
+                        </div>
+
+                        <div className="form-group">
+                            <label htmlFor="login">Login / Nazwa Użytkownika</label>
+                            <input
+                                id="login"
+                                type='text'
+                                className="form-control rounded"
+                                placeholder='Login / Nazwa Użytkownika'
+                                value={Login}
+                                onChange={x => setLogin(x.target.value)}
+                                required
+                            />
+                        </div>
+
+                        <div className="form-group">
+                            <label htmlFor="password">Hasło</label>
+                            <input
+                                id="password"
+                                type='password'
+                                className="form-control rounded"
+                                placeholder='Hasło'
+                                value={Password}
+                                onChange={x => setPassword(x.target.value)}
+                                required
+                            />
+                        </div>
+
+                        <button
+                            type="button"
+                            className="btn btn-danger mt-2"
+                            onClick={SaveNewUser}> Stwórz Konto </button>
+                    </form>
+                </div>
+            </main>
+
+            <footer className="bg-white text-dark text-center py-3 mt-auto">
+                <h6>©2025 WatchBox All Rights Reserved.</h6>
+            </footer>
+        </div>
+    );
 }
 
 export default SingUp;
