@@ -5,7 +5,6 @@ import Cookies from 'js-cookie';
 
 function Search({ setAuth }) {
     const Search = Cookies.get('Search')
-    const [Movies, setMovies] = useState([])
     const [SearchMoviesToAdd, setSearchMoviesToAdd] = useState([])
     const [SearchMoviesOnList, setSearchMoviesOnList] = useState([])
 
@@ -15,19 +14,23 @@ function Search({ setAuth }) {
     function featchMoviesToAdd() {
         fetch(`http://localhost:8000/AllMoviesToAdd/${Cookies.get('ID')}`)
             .then(res => res.json())
-            .then(data => setMovies(data.data))
-            //.then(setSearchMoviesToAdd(Movies.filter(x => Search[x.Title])))
-            .then(filtr(setSearchMoviesToAdd))
+            .then(data => {
+                const filtered = data.data.filter(x =>
+                    x.Title.toLowerCase().includes(Search.toLowerCase())
+                );
+                setSearchMoviesToAdd(filtered);
+            });
     }
-
-    //AllMoviesOnList
 
     function featchMoviesOnList() {
         fetch(`http://localhost:8000/AllMoviesOnList/${Cookies.get('ID')}`)
             .then(res => res.json())
-            .then(data => setMovies(data.data))
-            //.then(setSearchMoviesToAdd(Movies.filter(x => Search[x.Title])))
-            .then(filtr(setSearchMoviesOnList))
+            .then(data => {
+                const filtered = data.data.filter(x =>
+                    x.Title.toLowerCase().includes(Search.toLowerCase())
+                );
+                setSearchMoviesOnList(filtered);
+            });
     }
     function AddToUserMovieList(MovieId, UserId) {
         fetch("http://localhost:8000/AddFromUserMovieList", {
@@ -39,8 +42,10 @@ function Search({ setAuth }) {
     }
 
     useEffect(() => {
-        featchMoviesToAdd()
-    })
+        featchMoviesToAdd();
+        featchMoviesOnList();
+    }, []);
+
     function DeleteFromUserMovieList(MovieId, UserId) {
         fetch("http://localhost:8000/DeleteFromUserMovieList", {
             method: "DELETE",
@@ -51,14 +56,6 @@ function Search({ setAuth }) {
     }
 
 
-    function filtr(setFiltr) {
-        const f = Movies.filter(x =>
-            x.Title.toLowerCase().includes(Search.toLowerCase())
-        );
-
-        setFiltr(f);
-    }
-
     return (<div><header>
         <a href='/home'>
             <img src="WatchBoxLogo.png" height="125px" alt='LogoWatchBox' />
@@ -66,7 +63,8 @@ function Search({ setAuth }) {
     </header>
 
         <h1>Wyszukanie</h1>
-        
+
+        {SearchMoviesToAdd.length > 0? <>
         <h2>Filmy Do Dodania na twoją liste</h2>
         {SearchMoviesToAdd.map(x => (<div>
             <img src={'/' + x.Img} alt={x.img} height="300px" />
@@ -74,8 +72,9 @@ function Search({ setAuth }) {
             <h4>{x.Name}</h4>
             <p>{x.Description}</p>
             <input type='button' value="Dodaj" onClick={() => AddToUserMovieList(x.id, Cookies.get('ID'))} />
-        </div>))}
+        </div>))}</>: ""}
 
+            {SearchMoviesOnList.length > 0? <>
         <h2>Filmy na liście</h2>
         {SearchMoviesOnList.map(x => (<div>
             <img src={'/' + x.Img} alt={x.img} height="300px" />
@@ -83,7 +82,7 @@ function Search({ setAuth }) {
             <h4>{x.Name}</h4>
             <p>{x.Description}</p>
             <input type='button' value="Usuń" onClick={() => DeleteFromUserMovieList(x.id, Cookies.get('ID'))} />
-        </div>))}
+        </div>))}</>: ""}
     </div>)
 }
 export default Search;

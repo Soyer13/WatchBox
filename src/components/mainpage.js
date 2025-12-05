@@ -70,7 +70,7 @@ function Mainpage({ setAuth }) {
             <input type='button' value="Wyloguj" onClick={logOut} />
         </header>
         <main>
-            <input type='text' value={Search} onChange={x => setSeatch(x.target.value)} />{/*zaokroglony */}
+            <input type='text' value={Search} onChange={x => setSeatch(x.target.value)} placeholder='Wyszukaj Film'/>{/*zaokroglony */}
             <input type='button' value="Szukaj" onClick={SearchMovies}/>
 
             <h2>Twoja Lista Filmów</h2>
