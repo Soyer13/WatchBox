@@ -96,14 +96,11 @@ app.delete("/DeleteFromUserMovieList", (req, res) => {
     }
   })
 })
-//INSERT INTO movieslist (Id, UserId, MovieId, Status, AddDate) VALUES (NULL, '11', '1', '0', '2025-12-04');
 
 app.post("/AddFromUserMovieList",(req,res) => {
   const { UserId, MovieId } = req.body
   const date = new Date();
-  console.log(UserId, MovieId )
   conn.query("INSERT INTO movieslist ( UserId, MovieId, Status, AddDate) VALUES ( ?, ?, 0, ?);",[UserId,MovieId,date],(err,result) => {
-    console.log()
     if (err) res.json({ error: err });
     else {
       if (err == null) {
@@ -115,6 +112,109 @@ app.post("/AddFromUserMovieList",(req,res) => {
   })
 })
 
+app.get("/AllMoviesToAdd/:id",(req,res) => {
+  conn.query("SELECT movies.id,movies.Title,movies.Description,movies.Description,genre.Name ,movies.Img FROM movies LEFT JOIN movieslist ON movies.id = movieslist.MovieId  AND movieslist.UserId = ? JOIN genre ON movies.GenreID = genre.id WHERE movies.Accepted = 1  AND movieslist.MovieId IS NULL",[req.params.id],(err,result) => {
+  if (err) res.json({ error: err });
+      else {
+        if (err == null) {
+          res.json({ success: true, data: result });
+        } else {
+          res.json({ success: false });
+        }
+      }
+  })
+})
+
+app.get("/AllMoviesOnList/:id",(req,res) => {
+  conn.query("SELECT movies.id, movies.Title, movies.Description, genre.Name AS GenreName,  movies.Img FROM movies JOIN movieslist ON movies.id = movieslist.MovieId JOIN genre ON movies.GenreID = genre.id WHERE movies.Accepted = 1 AND movieslist.UserId = ?",[req.params.id],(err,result) => {
+  if (err) res.json({ error: err });
+      else {
+        if (err == null) {
+          res.json({ success: true, data: result });
+        } else {
+          res.json({ success: false });
+        }
+      }
+  })
+})
+
+
+app.post("/SaveNewMovie",(req,res) => {
+  conn.query("INSERT INTO movies ( Title, GenreID, Description, Img, Accepted) VALUES ( ?, ?, ?, ?, '0')",[req.body.MovieTitle, req.body.GenreID, req.body.Description, req.body.ImgName],(err,result) => {
+        console.log(err,result)
+    if (err) res.json({ error: err });
+      else {
+        if (err == null) {
+          res.json({ success: true, data: result });
+        } else {
+          res.json({ success: false });
+        }
+      }
+  })
+})
+
+app.get('/allGenre',(req,res) => {
+  conn.query("SELECT genre.Name,genre.id FROM genre",(err,result) => {
+    if (err) res.json({ error: err });
+      else {
+        if (err == null) {
+          res.json({ success: true, data: result });
+        } else {
+          res.json({ success: false });
+        }
+      }
+  })
+})
+
+app.post('/Adminlogin', (req, res) => {
+  conn.query("SELECT USER.Username FROM user WHERE user.IsAdmin = 1 AND user.Username = ? AND user.Password = ?", [req.body.login, req.body.password], (err, result) => {
+    if (err) res.json({ error: err });
+    else {
+      if (result.length > 0) {
+        res.json({ Id: result[0].id, success: true, user: result[0] });
+      } else {
+        res.json({ success: false });
+      }
+    }
+  })
+})
+app.get('/AllMovies',(req,res) => {
+  conn.query("SELECT movies.id,movies.Title,movies.Description,movies.Description,genre.Name ,movies.Accepted FROM movies JOIN genre ON movies.GenreID = genre.id",(err,result) =>{if (err) res.json({ error: err });
+      else {
+        if (err == null) {
+          res.json({ success: true, data: result });
+        } else {
+          res.json({ success: false });
+        }
+      }} )
+})
+
+app.post("/MovieAccepted",(req,res) => {
+  conn.query("UPDATE movies SET Accepted = ? WHERE movies.id = ?;",[req.body.Accepted ,req.body.id],(err,result) => res.json())
+})
+
+app.delete("/deleteMovie/:id",(req,res)=>{
+  conn.query("DELETE FROM movies WHERE movies.id = ?",[req.params.id],(err,result) => res.json())
+})
+
+app.get("/allUser",(req,res) =>{
+  conn.query("SELECT user.id, user.Name,user.Surname,user.Username,user.IsAdmin FROM user",(err,result) =>{
+    if (err) res.json({ error: err });
+    else {
+        if (err == null) {
+          res.json({ success: true, data: result });
+        } else {
+          res.json({ success: false });
+        }
+      }
+  } )
+})
+
+
+
+app.delete("/deleteUser/:id",(req,res)=>{
+  conn.query("DELETE FROM user WHERE user.id = ?",[req.params.id],(err,result) => res.json())
+})
 app.listen(8000, () => {
   console.log("Serwer działa na porcie 8000");
 });
